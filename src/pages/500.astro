@@ -1,0 +1,13 @@
+---
+interface Props {
+  error: unknown;
+}
+
+const { error } = Astro.props;
+---
+
+<div
+  style="height: 100dvh; background-color: tomato; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0%;margin: 0%;"
+>
+  {error instanceof Error ? error.message : "Unknown error"}
+</div>
