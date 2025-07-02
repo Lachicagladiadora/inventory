@@ -1,5 +1,6 @@
 GET http://localhost:4321/api HTTP/1.1
 
+# User
 ###
 
 POST http://localhost:4321/api/signup HTTP/1.1
@@ -28,3 +29,19 @@ content-type: application/json
 ###
 POST http://localhost:4321/api/signout HTTP/1.1
 content-type: application/json
+
+
+# Product
+###
+POST http://localhost:4321/api/product HTTP/1.1
+content-type: application/json
+
+{
+    "id": "022a6a51-0270-4be0-bda6-0a8dbf04129d",
+    "title": "Thunderbolt sneakers",
+    "description": "for fly",
+    "categoryId": "sport",
+    "brand":"haven",
+    "genre":"female",
+    "imagePreview":"https://auctions.c.yimg.jp/images.auctions.yahoo.co.jp/image/dr000/auc0407/users/c1fff615136a2fcf4b5e8fc23bc24acaf926e085/i-img1118x1200-16881753160owdym15.jpg"
+}
