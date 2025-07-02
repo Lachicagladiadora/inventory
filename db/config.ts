@@ -9,6 +9,23 @@ const User = defineTable({
     password: column.text(),
   },
 });
+
+const Product = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    title: column.text(),
+    description: column.text(),
+    categoryId: column.text(),
+    brand: column.text(),
+    genre: column.text(),
+    imagePreview: column.text(),
+    createAt: column.text(),
+    updatedAt: column.text(),
+    createdBy: column.text(),
+    updatedBy: column.text(),
+  },
+});
+
 export default defineDb({
-  tables: { User },
+  tables: { User, Product },
 });
