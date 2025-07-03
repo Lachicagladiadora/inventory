@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
-import { db, Product } from "astro:db";
+import { db, eq, Product } from "astro:db";
+import type { ProductSchema } from "../../types";
 
 export const prerender = false;
 
@@ -7,6 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
     if (!body) throw Error("Exist an error in the product information");
+    //validar que sea lo que quiero
     const product = {
       ...body,
       createAt: new Date().toString(),

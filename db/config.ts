@@ -13,7 +13,7 @@ const User = defineTable({
 const Product = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
-    title: column.text(),
+    title: column.text({ unique: true }),
     description: column.text(),
     categoryId: column.text(),
     brand: column.text(),
