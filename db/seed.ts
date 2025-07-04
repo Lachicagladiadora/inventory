@@ -18,7 +18,7 @@ export default async function seed() {
     // id: "1",
     title: "Achilles' sandal",
     description: "for running",
-    categoryId: "outdoor",
+    categoryId: "e091d5bf-ea1f-491a-a4a5-4f527739847b",
     brand: "talaria",
     genre: "unisex",
     imagePreview:
