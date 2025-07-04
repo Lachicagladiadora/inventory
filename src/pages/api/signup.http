@@ -1,0 +1,9 @@
+POST http://localhost:4321/api/signup HTTP/1.1
+content-type: application/json
+
+{
+    "email": "pu@gmail.com",
+    "password": "asdfghjk",
+    "id": "d6656872-9f31-4d13-b04e-34da5a0af637",
+    "role": "seller"
+}
