@@ -3,6 +3,7 @@ import { Protected } from "../atomic/molecules/Protected";
 import { SignOutButton } from "../atomic/atoms/SignOutButton";
 import Layout from "../layouts/Layout.astro";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
+import { Products } from "../atomic/organisms/Products";
 
 const data = Astro.locals.user;
 if (!data) navigate("/signin");
@@ -13,5 +14,6 @@ if (!data) navigate("/signin");
     <h1>Inventory</h1>
     <SignOutButton client:idle />
     <Protected client:idle />
+    <Products client:idle />
   </main>
 </Layout>
