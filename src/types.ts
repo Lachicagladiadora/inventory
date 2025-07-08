@@ -1,7 +1,4 @@
-export type FormUser = {
-  email: string;
-  password: string;
-};
+export type FormUser = { email: string; password: string };
 
 export type User = {
   id: string;
@@ -9,6 +6,10 @@ export type User = {
   email: string;
   password: string;
 };
+
+export type Color = { id: string; label: string; rgb: string };
+export type Material = { id: string; label: string; imageSVG: string };
+export type Size = { id: string; label: string };
 
 export type FormProduct = {
   // id: string;

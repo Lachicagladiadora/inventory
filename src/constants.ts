@@ -1,4 +1,4 @@
-import type { FormUser, Genre } from "./types";
+import type { Color, FormUser, Genre, Material, Size } from "./types";
 
 export const EMPTY_USER: FormUser = {
   email: "",
@@ -30,3 +30,43 @@ export const BRANDS = [
 ];
 
 export const GENRE: Genre[] = ["female", "male", "unisex"];
+
+export const COLORS: Color[] = [
+  {
+    id: "d1f77a60-7e94-40f5-bef4-180ec3dabe17",
+    rgb: "#000000",
+    label: "Black",
+  },
+  {
+    id: "aa92c1f3-c0ed-41fc-baeb-323478ac0ac6",
+    rgb: "#673521",
+    label: "Brown",
+  },
+  {
+    id: "7c674361-0ed0-4901-a336-5095e7f19327",
+    rgb: "#ffffff",
+    label: "White",
+  },
+];
+export const MATERIALS: Material[] = [
+  {
+    id: "c3427c8d-5b65-48b8-96df-002365bedce0",
+    imageSVG: "https://static.thenounproject.com/png/168303-200.png",
+    label: "Leather",
+  },
+  {
+    id: "b1ebd01e-bf48-422c-b48e-644ba4bc3f1a",
+    imageSVG: "https://static.thenounproject.com/png/748910-200.png",
+    label: "Tarp",
+  },
+  {
+    id: "dd860c8e-c5e1-4a2d-a152-3a473911515e",
+    imageSVG: "https://img.icons8.com/stamp/512w/leather.png",
+    label: "Patent leather",
+  },
+];
+export const SIZES: Size[] = [
+  { id: "442cff0d-bb66-4fca-956a-5dbdc651c9f8", label: "25" },
+  { id: "0b10e812-e0dc-4b10-94e6-289f11a17b48", label: "35" },
+  { id: "3b7e80a2-c21b-4c70-9910-cf6dc7366cc8", label: "45" },
+];
