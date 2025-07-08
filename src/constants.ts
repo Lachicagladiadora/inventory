@@ -1,4 +1,4 @@
-import type { FormUser } from "./types";
+import type { FormUser, Genre } from "./types";
 
 export const EMPTY_USER: FormUser = {
   email: "",
@@ -29,4 +29,4 @@ export const BRANDS = [
   },
 ];
 
-export const GENRE = ["female", "male", "unisex"];
+export const GENRE: Genre[] = ["female", "male", "unisex"];

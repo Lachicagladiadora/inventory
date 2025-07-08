@@ -24,16 +24,23 @@ export type FormProduct = {
   // updatedBy: string;
 };
 
+export type Genre = "female" | "male" | "unisex";
+
 export type ProductSchema = {
   id: string;
   title: string;
   description: string;
   categoryId: string;
-  brand: string;
-  genre: string;
+  brandId: string;
+  genre: Genre;
   imagePreview: string;
   createAt: string;
   updatedAt: string;
   createdBy: string;
   updatedBy: string;
+};
+
+export type CategoryData = {
+  id: string;
+  label: string;
 };

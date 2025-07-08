@@ -19,7 +19,7 @@ export default async function seed() {
     title: "Achilles' sandal",
     description: "for running",
     categoryId: "e091d5bf-ea1f-491a-a4a5-4f527739847b",
-    brand: "talaria",
+    brandId: "talaria",
     genre: "unisex",
     imagePreview:
       "https://sirioti.com/cdn/shop/articles/god-hermes-symbols.jpg?v=1716747382",

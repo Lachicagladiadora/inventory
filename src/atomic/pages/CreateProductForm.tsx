@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { navigate } from "astro:transitions/client";
-import { EMPTY_USER } from "../../constants";
-import { signIn } from "../../repository/user.repository";
-import type { FormProduct, FormUser } from "../../types";
-import { validateUser } from "../../utils/validateUser.utils";
+import { BRANDS, CATEGORIES } from "../../constants";
+import type { CategoryData, FormProduct } from "../../types";
+import { addProduct } from "../../repository/product.repository";
 
-export const SignInForm = () => {
-  // const [user, setUser] = useState<FormUser>(EMPTY_USER);
-  const [user, setUser] = useState<FormProduct>({
+export const CreateProductForm = () => {
+  const [category, setCategory] = useState<CategoryData[]>(CATEGORIES);
+  const [product, setProduct] = useState<FormProduct>({
     // id: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
     title: "Thunderbolt sneakers",
     description:
@@ -23,9 +22,9 @@ export const SignInForm = () => {
     try {
       e.preventDefault();
       // validateUser(user);
-      await signIn(user);
+      await addProduct(product);
       // setUser(EMPTY_USER);
-      navigate("/");
+      navigate("/product");
     } catch (error) {
       console.error({ error });
     }
@@ -42,25 +41,61 @@ export const SignInForm = () => {
       }}
     >
       <label>
-        Email:{" "}
+        Title:{" "}
         <input
-          type="email"
-          value={user.email}
-          onChange={(e) => setUser((p) => ({ ...p, email: e.target.value }))}
+          type="title"
+          value={product.title}
+          onChange={(e) => setProduct((p) => ({ ...p, title: e.target.value }))}
         />
       </label>
       <label>
-        Password:{" "}
-        <input
-          type="text"
-          value={user.password}
-          onChange={(e) => setUser((p) => ({ ...p, password: e.target.value }))}
+        Description:{" "}
+        <textarea
+          value={product.description}
+          onChange={(e) =>
+            setProduct((p) => ({ ...p, description: e.target.value }))
+          }
         />
       </label>
-      {/* <label>
-        Confirm password: <input type="text" />
-      </label> */}
-      <button>Sign in</button>
+      <label>
+        Category:{" "}
+        <select name="" id="">
+          {CATEGORIES.map((c) => (
+            <option value={c.id} key={c.id}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Brands:{" "}
+        <select name="" id="">
+          {BRANDS.map((c) => (
+            <option value={c.id} key={c.id}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Genre:{" "}
+        <input
+          type="genre"
+          value={product.genre}
+          onChange={(e) => setProduct((p) => ({ ...p, genre: e.target.value }))}
+        />
+      </label>
+      <label>
+        URL Image:{" "}
+        <input
+          type="imagePreview"
+          value={product.imagePreview}
+          onChange={(e) =>
+            setProduct((p) => ({ ...p, imagePreview: e.target.value }))
+          }
+        />
+      </label>
+      <button>Save</button>
     </form>
   );
 };

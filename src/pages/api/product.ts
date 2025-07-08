@@ -10,7 +10,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
     if (!user) throw Error("You need access for this content");
     const body = await request.json();
     if (!body) throw Error("Exist an error in the product information");
-    //validar que sea lo que quiero
     const data = {
       ...body,
       createAt: new Date().toString(),
@@ -19,9 +18,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
       updatedBy: "admin",
     };
     const product = validateProduct(data);
-    console.log({ product, data });
-    if (!product) throw Error("Review the product data, you have an error");
     await db.insert(Product).values(product);
+
     return new Response(
       JSON.stringify({
         message: `User ${product.title} created`,

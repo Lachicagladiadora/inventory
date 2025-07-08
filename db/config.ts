@@ -16,7 +16,7 @@ const Product = defineTable({
     title: column.text({ unique: true }),
     description: column.text(),
     categoryId: column.text(),
-    brand: column.text(),
+    brandId: column.text(),
     genre: column.text(),
     imagePreview: column.text(),
     createAt: column.text(),
