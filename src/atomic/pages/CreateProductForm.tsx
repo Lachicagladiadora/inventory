@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { navigate } from "astro:transitions/client";
-import { BRANDS, CATEGORIES } from "../../constants";
-import type { CategoryData, FormProduct } from "../../types";
+import { BRANDS, CATEGORIES, COLORS, MATERIALS, SIZES } from "../../constants";
+import type { FormProduct, Size } from "../../types";
 import { addProduct } from "../../repository/product.repository";
 
 export const CreateProductForm = () => {
-  const [category, setCategory] = useState<CategoryData[]>(CATEGORIES);
+  const [sizes, setSizes] = useState<Size[]>(SIZES);
+  // const [category, setCategory] = useState<CategoryData[]>(CATEGORIES);
+  // const [category, setCategory] = useState<CategoryData[]>(CATEGORIES);
   const [product, setProduct] = useState<FormProduct>({
     // id: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
     title: "Thunderbolt sneakers",
@@ -29,6 +31,21 @@ export const CreateProductForm = () => {
       console.error({ error });
     }
   };
+
+  const onChangeSelectMultiple = (e: any) => {
+    try {
+      const newValues: HTMLCollection = e.target.selectedOptions.pop();
+      setSizes((p) => {
+        return [newValues.map((c) => sizes.find((cur) => cur.id === c.value))];
+        // if (!p || p.length === 0) return SIZES.filter((c) => c.id === newValue);
+        // if (p.some((c) => c.id === newValue)) return p;
+        // return [...p, SIZES.filter((c) => c.id === newValue)[0]];
+      });
+    } catch (error) {
+      console.error({ error });
+    }
+  };
+  console.log({ sizes });
 
   return (
     <form
@@ -95,6 +112,91 @@ export const CreateProductForm = () => {
           }
         />
       </label>
+      <label>
+        Size:{" "}
+        <select
+          name=""
+          onChange={(e) => {
+            console.log("jiji");
+            onChangeSelectMultiple(e);
+            console.log({ e });
+            console.log(e.target.value);
+            setSizes(SIZES.filter((c) => c.id === e.target.value));
+          }}
+          multiple
+        >
+          {SIZES.map((c) => (
+            <option
+              value={c.id}
+              key={c.id}
+              // onChange={(e) => {
+              //   onChangeSelectMultiple(e);
+              // }}
+            >
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Color:{" "}
+        <select name="" id="" multiple>
+          {COLORS.map((c) => (
+            <option value={c.id} key={c.id}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Material:{" "}
+        <select name="" id="" multiple>
+          {MATERIALS.map((c) => (
+            <option value={c.id} key={c.id}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <table>
+        <thead>
+          <tr>
+            <th colSpan={3}>Properties</th>
+            <th>Price</th>
+            <th>Discount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {COLORS.map((current) => {
+            return MATERIALS.map((cur) => {
+              return sizes.map((c) => {
+                return (
+                  <tr>
+                    <td key={current.id}>
+                      <input type="color" name="" id="" value={current.rgb} />
+                    </td>
+                    <td key={cur.id}>
+                      <input type="text" name="" id="" value={cur.label} />
+                    </td>
+                    <td key={c.id}>
+                      <input type="text" name="" id="" value={c.label} />
+                    </td>
+                    <td>
+                      <input type="text" placeholder="0.00" />
+                    </td>
+                    <td>
+                      <input type="text" placeholder="0.00" />
+                    </td>
+                  </tr>
+                );
+              });
+            });
+          })}
+          <tr></tr>
+        </tbody>
+      </table>
+
       <button>Save</button>
     </form>
   );
