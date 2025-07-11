@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { navigate } from "astro:transitions/client";
 import { BRANDS, CATEGORIES, COLORS, MATERIALS, SIZES } from "../../constants";
-import type { FormProduct, Size } from "../../types";
+import type { Color, FormProduct, Material, Size } from "../../types";
 import { addProduct } from "../../repository/product.repository";
 
 export const CreateProductForm = () => {
   const [sizes, setSizes] = useState<Size[]>(SIZES);
-  // const [category, setCategory] = useState<CategoryData[]>(CATEGORIES);
-  // const [category, setCategory] = useState<CategoryData[]>(CATEGORIES);
+  const [colors, setColors] = useState<Color[]>(COLORS);
+  const [materials, setMaterials] = useState<Material[]>(MATERIALS);
   const [product, setProduct] = useState<FormProduct>({
     // id: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
     title: "Thunderbolt sneakers",
@@ -32,20 +32,44 @@ export const CreateProductForm = () => {
     }
   };
 
-  const onChangeSelectMultiple = (e: any) => {
+  const onChangeSizeMultiple = (e: any) => {
     try {
-      const newValues: HTMLCollection = e.target.selectedOptions.pop();
-      setSizes((p) => {
-        return [newValues.map((c) => sizes.find((cur) => cur.id === c.value))];
-        // if (!p || p.length === 0) return SIZES.filter((c) => c.id === newValue);
-        // if (p.some((c) => c.id === newValue)) return p;
-        // return [...p, SIZES.filter((c) => c.id === newValue)[0]];
-      });
+      const values = e.target.selectedOptions;
+      const selectedValues = [...values].map((c) => c.value);
+      const newValues = SIZES.filter((cur) =>
+        selectedValues.find((c) => c === cur.id)
+      );
+      setSizes(newValues);
     } catch (error) {
       console.error({ error });
     }
   };
-  console.log({ sizes });
+
+  const onChangeColorMultiple = (e: any) => {
+    try {
+      const values = e.target.selectedOptions;
+      const selectedValues = [...values].map((c) => c.value);
+      const newValues = COLORS.filter((cur) =>
+        selectedValues.find((c) => c === cur.id)
+      );
+      setColors(newValues);
+    } catch (error) {
+      console.error({ error });
+    }
+  };
+
+  const onChangeMaterialMultiple = (e: any) => {
+    try {
+      const values = e.target.selectedOptions;
+      const selectedValues = [...values].map((c) => c.value);
+      const newValues = MATERIALS.filter((cur) =>
+        selectedValues.find((c) => c === cur.id)
+      );
+      setMaterials(newValues);
+    } catch (error) {
+      console.error({ error });
+    }
+  };
 
   return (
     <form
@@ -114,25 +138,9 @@ export const CreateProductForm = () => {
       </label>
       <label>
         Size:{" "}
-        <select
-          name=""
-          onChange={(e) => {
-            console.log("jiji");
-            onChangeSelectMultiple(e);
-            console.log({ e });
-            console.log(e.target.value);
-            setSizes(SIZES.filter((c) => c.id === e.target.value));
-          }}
-          multiple
-        >
+        <select name="" onChange={onChangeSizeMultiple} multiple>
           {SIZES.map((c) => (
-            <option
-              value={c.id}
-              key={c.id}
-              // onChange={(e) => {
-              //   onChangeSelectMultiple(e);
-              // }}
-            >
+            <option value={c.id} key={c.id}>
               {c.label}
             </option>
           ))}
@@ -140,7 +148,7 @@ export const CreateProductForm = () => {
       </label>
       <label>
         Color:{" "}
-        <select name="" id="" multiple>
+        <select name="" onChange={onChangeColorMultiple} multiple>
           {COLORS.map((c) => (
             <option value={c.id} key={c.id}>
               {c.label}
@@ -150,7 +158,7 @@ export const CreateProductForm = () => {
       </label>
       <label>
         Material:{" "}
-        <select name="" id="" multiple>
+        <select name="" id="" onChange={onChangeMaterialMultiple} multiple>
           {MATERIALS.map((c) => (
             <option value={c.id} key={c.id}>
               {c.label}
@@ -168,19 +176,37 @@ export const CreateProductForm = () => {
           </tr>
         </thead>
         <tbody>
-          {COLORS.map((current) => {
-            return MATERIALS.map((cur) => {
+          {colors.map((current) => {
+            return materials.map((cur) => {
               return sizes.map((c) => {
                 return (
-                  <tr>
+                  <tr key={current.id + cur.id + c.id}>
                     <td key={current.id}>
-                      <input type="color" name="" id="" value={current.rgb} />
+                      <input
+                        type="color"
+                        name=""
+                        id=""
+                        value={current.rgb}
+                        readOnly
+                      />
                     </td>
                     <td key={cur.id}>
-                      <input type="text" name="" id="" value={cur.label} />
+                      <input
+                        type="text"
+                        name=""
+                        id=""
+                        value={cur.label}
+                        readOnly
+                      />
                     </td>
                     <td key={c.id}>
-                      <input type="text" name="" id="" value={c.label} />
+                      <input
+                        type="text"
+                        name=""
+                        id=""
+                        value={c.label}
+                        readOnly
+                      />
                     </td>
                     <td>
                       <input type="text" placeholder="0.00" />

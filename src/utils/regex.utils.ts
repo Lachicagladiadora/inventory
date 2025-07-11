@@ -15,3 +15,6 @@ export const IS_IMAGE_PREVIEW =
 export const IS_DATE =
   /^[A-Z][a-z]{2} [A-Z][a-z]{2} \d{2} \d{4} \d{2}:\d{2}:\d{2} GMT[+-]\d{4} \([^)]+\)$/;
 // export const IS_AUTHOR ; // UUID
+
+export const RE_POSITIVE_NUMBER = /^(?:\d+|\d+\.\d+)$/;
+export const RE_CHANGE_NUMBER = /^(?:\d+(?:\.\d*)?)?$/;
