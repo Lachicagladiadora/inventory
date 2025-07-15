@@ -34,7 +34,9 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
       "https://auctions.c.yimg.jp/images.auctions.yahoo.co.jp/image/dr000/auc0407/users/c1fff615136a2fcf4b5e8fc23bc24acaf926e085/i-img1118x1200-16881753160owdym15.jpg",
   });
 
-  const onSignIn = async (e: any) => {
+  // const createConfigs
+
+  const onCreateProduct = async (e: any) => {
     try {
       e.preventDefault();
       // validateUser(user);
@@ -85,31 +87,9 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
     }
   };
 
-  // useEffect(() => {
-  //   const newList: ProductConfigData[] = colors.map((current) => {
-  //     materials.map((cur) => {
-  //       sizes.map((c) => ({
-  //         id: crypto.randomUUID(),
-  //         productId: crypto.randomUUID(),
-  //         colorId: current.id,
-  //         materialId: cur.id,
-  //         sizeId: c.id,
-  //         price: "0.00",
-  //         discount: "0.00",
-  //         createAt: getCurrentDate(),
-  //         updatedAt: getCurrentDate(),
-  //         createdBy: userId,
-  //         updatedBy: userId,
-  //       }));
-  //     });
-  //     return [{}];
-  //   });
-  //   setProductConfigList();
-  // }, [colors, materials, sizes]);
-
   return (
     <form
-      onSubmit={(e) => onSignIn(e)}
+      onSubmit={(e) => onCreateProduct(e)}
       style={{
         display: "flex",
         flexDirection: "column",

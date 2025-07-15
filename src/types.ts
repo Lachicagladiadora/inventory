@@ -61,6 +61,7 @@ export type ProductConfigSchema = {
 };
 
 export type ProductConfigData = {
+  id: string;
   colorId: string;
   materialId: string;
   sizeId: string;

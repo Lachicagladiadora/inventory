@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Color, Material, ProductConfigData, Size } from "../../types";
+import type { ProductConfigData } from "../../types";
 import {
   generateProductConfig,
   type GenerateProductConfigInput,
@@ -14,12 +14,39 @@ export const ProductConfig = ({
 }: ProductConfigProps) => {
   const [productConfig, setProductConfig] = useState<ProductConfigData[]>([]);
 
-  const onChangeMoney = (e: any) => {
+  type onChangeMoneyInput = {
+    e: any;
+    id: string;
+  };
+
+  const onChangePrice = ({ e, id }: onChangeMoneyInput) => {
     const newValue = e.target.value;
     if (!RE_CHANGE_NUMBER.test(newValue)) return;
-    if (newValue.at(-1) === ".") {
-      return;
-    }
+    // if (newValue.at(-1) === ".") {
+    //   return;
+    // }
+    setProductConfig((p) => {
+      const updatedList = p.map((c) => {
+        if (c.id !== id) return c;
+        return { ...c, price: newValue };
+      });
+      return updatedList;
+    });
+  };
+
+  const onChangeDiscount = ({ e, id }: onChangeMoneyInput) => {
+    const newValue = e.target.value;
+    if (!RE_CHANGE_NUMBER.test(newValue)) return;
+    // if (newValue.at(-1) === ".") {
+    //   return;
+    // }
+    setProductConfig((p) => {
+      const updatedList = p.map((c) => {
+        if (c.id !== id) return c;
+        return { ...c, discount: newValue };
+      });
+      return updatedList;
+    });
   };
 
   useEffect(() => {
@@ -27,7 +54,7 @@ export const ProductConfig = ({
     console.log({ newConfig });
     setProductConfig(newConfig);
   }, [colors, materials, sizes]);
-  console.log({ productConfig });
+
   return (
     <table>
       <thead>
@@ -40,7 +67,7 @@ export const ProductConfig = ({
       <tbody>
         {productConfig.map((c) => {
           return (
-            <tr key={c.colorId + c.materialId + c.sizeId}>
+            <tr key={c.id}>
               <td className="">
                 <div
                   style={{
@@ -63,14 +90,24 @@ export const ProductConfig = ({
                 <input
                   type="text"
                   placeholder="0.00"
-                  onChange={onChangeMoney}
+                  onChange={(e) =>
+                    onChangePrice({
+                      e: e,
+                      id: c.id,
+                    })
+                  }
                 />
               </td>
               <td>
                 <input
                   type="text"
                   placeholder="0.00"
-                  onChange={onChangeMoney}
+                  onChange={(e) =>
+                    onChangeDiscount({
+                      e: e,
+                      id: c.id,
+                    })
+                  }
                 />
               </td>
             </tr>

@@ -16,6 +16,7 @@ export const generateProductConfig = ({
     materials.forEach((cur) => {
       sizes.forEach((c) => {
         const newValue: ProductConfigData = {
+          id: current.id + cur.id + c.id,
           colorId: current.id,
           materialId: cur.id,
           sizeId: c.id,
