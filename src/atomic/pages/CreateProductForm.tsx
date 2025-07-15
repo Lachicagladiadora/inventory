@@ -1,13 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { navigate } from "astro:transitions/client";
 import { BRANDS, CATEGORIES, COLORS, MATERIALS, SIZES } from "../../constants";
-import type { Color, FormProduct, Material, Size } from "../../types";
+import type {
+  Color,
+  FormProduct,
+  Material,
+  ProductConfigData,
+  Size,
+} from "../../types";
 import { addProduct } from "../../repository/product.repository";
+import { RE_CHANGE_NUMBER } from "../../utils/regex.utils";
+import { getCurrentDate } from "../../utils/date.utils";
+import { ProductConfig } from "../molecules/ProductConfig";
 
-export const CreateProductForm = () => {
-  const [sizes, setSizes] = useState<Size[]>(SIZES);
-  const [colors, setColors] = useState<Color[]>(COLORS);
-  const [materials, setMaterials] = useState<Material[]>(MATERIALS);
+type CreateProductFormProps = { userId: string };
+
+export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
+  const [sizes, setSizes] = useState<Size[]>([]);
+  const [colors, setColors] = useState<Color[]>([]);
+  const [materials, setMaterials] = useState<Material[]>([]);
+  const [productConfigList, setProductConfigList] = useState<
+    ProductConfigData[]
+  >([]);
   const [product, setProduct] = useState<FormProduct>({
     // id: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
     title: "Thunderbolt sneakers",
@@ -70,6 +84,28 @@ export const CreateProductForm = () => {
       console.error({ error });
     }
   };
+
+  // useEffect(() => {
+  //   const newList: ProductConfigData[] = colors.map((current) => {
+  //     materials.map((cur) => {
+  //       sizes.map((c) => ({
+  //         id: crypto.randomUUID(),
+  //         productId: crypto.randomUUID(),
+  //         colorId: current.id,
+  //         materialId: cur.id,
+  //         sizeId: c.id,
+  //         price: "0.00",
+  //         discount: "0.00",
+  //         createAt: getCurrentDate(),
+  //         updatedAt: getCurrentDate(),
+  //         createdBy: userId,
+  //         updatedBy: userId,
+  //       }));
+  //     });
+  //     return [{}];
+  //   });
+  //   setProductConfigList();
+  // }, [colors, materials, sizes]);
 
   return (
     <form
@@ -166,63 +202,7 @@ export const CreateProductForm = () => {
           ))}
         </select>
       </label>
-
-      <table>
-        <thead>
-          <tr>
-            <th colSpan={3}>Properties</th>
-            <th>Price</th>
-            <th>Discount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {colors.map((current) => {
-            return materials.map((cur) => {
-              return sizes.map((c) => {
-                return (
-                  <tr key={current.id + cur.id + c.id}>
-                    <td key={current.id}>
-                      <input
-                        type="color"
-                        name=""
-                        id=""
-                        value={current.rgb}
-                        readOnly
-                      />
-                    </td>
-                    <td key={cur.id}>
-                      <input
-                        type="text"
-                        name=""
-                        id=""
-                        value={cur.label}
-                        readOnly
-                      />
-                    </td>
-                    <td key={c.id}>
-                      <input
-                        type="text"
-                        name=""
-                        id=""
-                        value={c.label}
-                        readOnly
-                      />
-                    </td>
-                    <td>
-                      <input type="text" placeholder="0.00" />
-                    </td>
-                    <td>
-                      <input type="text" placeholder="0.00" />
-                    </td>
-                  </tr>
-                );
-              });
-            });
-          })}
-          <tr></tr>
-        </tbody>
-      </table>
-
+      <ProductConfig colors={colors} materials={materials} sizes={sizes} />
       <button>Save</button>
     </form>
   );

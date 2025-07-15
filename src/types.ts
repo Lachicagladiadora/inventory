@@ -45,3 +45,25 @@ export type CategoryData = {
   id: string;
   label: string;
 };
+
+export type ProductConfigSchema = {
+  id: string;
+  productId: string;
+  colorId: string;
+  materialId: string;
+  sizeId: string;
+  price: string;
+  discount: string;
+  createAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+};
+
+export type ProductConfigData = {
+  colorId: string;
+  materialId: string;
+  sizeId: string;
+  price: string;
+  discount: string;
+};

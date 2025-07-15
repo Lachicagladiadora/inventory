@@ -19,7 +19,10 @@ export const Protected = () => {
   return (
     <div>
       {protectedData}
-      <button onClick={async () => await getProtectedData()}>
+      <button
+        onClick={async () => await getProtectedData()}
+        className="bg-emerald-600"
+      >
         get protected contend
       </button>
     </div>

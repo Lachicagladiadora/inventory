@@ -6,11 +6,16 @@ import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { CreateProductButton } from "../atomic/atoms/CreateProductButton";
 
 const data = Astro.locals.user;
-if (!data) navigate("/signin");
+const tt = Astro.locals;
 
-const onCreateProductForm = () => {
-  navigate("/createProduct");
-};
+(() => {
+  console.log("jiji", { data }, { tt });
+  if (!data) return navigate("/signin");
+})();
+
+// const onCreateProductForm = () => {
+//   navigate("/createProduct");
+// };
 ---
 
 <Layout>

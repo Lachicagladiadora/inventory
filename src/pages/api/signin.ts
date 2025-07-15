@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ cookies, request }) => {
       expires: getOneHourAfterNow(),
     });
 
-    // locals.user = user.id
+    // locals.user = user.id;
     return new Response(
       JSON.stringify({
         status: 200,
