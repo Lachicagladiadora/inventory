@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { db, Product } from "astro:db";
-import { validateProduct } from "../../utils/validateProduct.utils";
+import { db, ProductConfig } from "astro:db";
+// import { validateProduct } from "../../utils/validateProduct.utils";
 
 // export const prerender = false;
 
@@ -17,12 +17,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
       createdBy: "admin",
       updatedBy: "admin",
     };
-    const product = validateProduct(data);
-    await db.insert(Product).values(product);
+    // const config = validateProduct(data);
+    await db.insert(ProductConfig).values(data);
 
     return new Response(
       JSON.stringify({
-        message: `User ${product.title} created`,
+        message: `New product-config created`,
       }),
       { status: 200 }
     );

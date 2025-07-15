@@ -1,4 +1,4 @@
-import { db, Product, User } from "astro:db";
+import { db, Product, User, ProductConfig } from "astro:db";
 // import { Product, User } from "./config";
 // import { asDrizzleTable } from "@astrojs/db/runtime";
 
@@ -23,6 +23,20 @@ export default async function seed() {
     genre: "unisex",
     imagePreview:
       "https://sirioti.com/cdn/shop/articles/god-hermes-symbols.jpg?v=1716747382",
+    createAt: new Date().toString(),
+    updatedAt: new Date().toString(),
+    createdBy: "admin",
+    updatedBy: "admin",
+  });
+
+  await db.insert(ProductConfig).values({
+    // id:"1"
+    productId: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
+    colorId: "aa92c1f3-c0ed-41fc-baeb-323478ac0ac6",
+    materialId: "b1ebd01e-bf48-422c-b48e-644ba4bc3f1a",
+    sizeId: "0b10e812-e0dc-4b10-94e6-289f11a17b48",
+    price: "54.90",
+    discount: "0.00",
     createAt: new Date().toString(),
     updatedAt: new Date().toString(),
     createdBy: "admin",
