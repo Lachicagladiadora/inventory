@@ -16,7 +16,7 @@ export type FormProduct = {
   title: string;
   description: string;
   categoryId: string;
-  brand: string;
+  brandId: string;
   genre: string;
   imagePreview: string;
   // createAt: string;

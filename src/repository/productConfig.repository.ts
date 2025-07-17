@@ -2,8 +2,13 @@ import type { ProductConfigData } from "../types";
 
 type AddProductConfigInput = {
   params: {
+    // id: string;
     productId: string;
-    productConfig: ProductConfigData;
+    colorId: string;
+    materialId: string;
+    sizeId: string;
+    price: string;
+    discount: string;
   };
 };
 
@@ -14,8 +19,7 @@ export const addProductConfig = async ({
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      ...params.productConfig,
-      productId: params.productId,
+      ...params,
       id: crypto.randomUUID(),
     }),
   });

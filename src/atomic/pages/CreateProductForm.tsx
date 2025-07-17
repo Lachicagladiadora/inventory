@@ -19,16 +19,14 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
   const [sizes, setSizes] = useState<Size[]>([]);
   const [colors, setColors] = useState<Color[]>([]);
   const [materials, setMaterials] = useState<Material[]>([]);
-  const [productConfigList, setProductConfigList] = useState<
-    ProductConfigData[]
-  >([]);
+
   const [product, setProduct] = useState<FormProduct>({
     // id: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
     title: "Thunderbolt sneakers",
     description:
       "for fly for fly for fly for fly for fly for fly v vvfor flyvv for flyfor flyfor flyfor fly for flyfor flyfor fly",
     categoryId: "76a1d615-1b55-4332-afe7-ec5c635ff7ea",
-    brand: "haven",
+    brandId: "16ff8130-0a40-4127-9e62-448b3e9a6b35",
     genre: "female",
     imagePreview:
       "https://auctions.c.yimg.jp/images.auctions.yahoo.co.jp/image/dr000/auc0407/users/c1fff615136a2fcf4b5e8fc23bc24acaf926e085/i-img1118x1200-16881753160owdym15.jpg",
@@ -46,6 +44,12 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
     } catch (error) {
       console.error({ error });
     }
+  };
+
+  const onChangeBrand = (e: any) => {
+    const newValue = e.target.value;
+    // const newId =
+    setProduct((p) => ({ ...p, brandId: newValue }));
   };
 
   const onChangeSizeMultiple = (e: any) => {
@@ -126,7 +130,7 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
       </label>
       <label>
         Brands:{" "}
-        <select name="" id="">
+        <select name="" id="" onChange={(e) => onChangeBrand(e)}>
           {BRANDS.map((c) => (
             <option value={c.id} key={c.id}>
               {c.label}
@@ -153,16 +157,6 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
         />
       </label>
       <label>
-        Size:{" "}
-        <select name="" onChange={onChangeSizeMultiple} multiple>
-          {SIZES.map((c) => (
-            <option value={c.id} key={c.id}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
         Color:{" "}
         <select name="" onChange={onChangeColorMultiple} multiple>
           {COLORS.map((c) => (
@@ -176,6 +170,16 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
         Material:{" "}
         <select name="" id="" onChange={onChangeMaterialMultiple} multiple>
           {MATERIALS.map((c) => (
+            <option value={c.id} key={c.id}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Size:{" "}
+        <select name="" onChange={onChangeSizeMultiple} multiple>
+          {SIZES.map((c) => (
             <option value={c.id} key={c.id}>
               {c.label}
             </option>

@@ -16,7 +16,7 @@ export const validateProduct = (value: ProductSchema) => {
   const title = value.title;
   const description = value.description;
   const categoryId = value.categoryId;
-  const brand = value.brand;
+  const brandId = value.brandId;
   const genre = value.genre;
   const imagePreview = value.imagePreview;
 
@@ -25,7 +25,7 @@ export const validateProduct = (value: ProductSchema) => {
   if (!IS_DESCRIPTION.test(description))
     throw Error("Your 'description' perhaps is very short or pretty long");
   if (!IS_UUID.test(categoryId)) throw Error("Your 'categoryId' is incorrect");
-  if (!BRANDS.some((c) => c.label === brand)) throw Error("'brand' invalid");
+  if (!BRANDS.some((c) => c.id === brandId)) throw Error("'brand' invalid");
   if (!GENRE.some((c) => c === genre.toLocaleLowerCase()))
     throw Error("'genre' incorrect");
   if (!IS_IMAGE_PREVIEW.test(imagePreview))
@@ -36,7 +36,7 @@ export const validateProduct = (value: ProductSchema) => {
     title,
     description,
     categoryId,
-    brand,
+    brandId,
     genre,
     imagePreview,
     createAt: value.createAt,
