@@ -1,7 +1,10 @@
-import type { ProductConfigData, ProductConfigSchema } from "../types";
+import type { ProductConfigData } from "../types";
 
 type AddProductConfigInput = {
-  params: Exclude<ProductConfigSchema, { id; createdAt }>;
+  params: {
+    productId: string;
+    productConfig: ProductConfigData;
+  };
 };
 
 export const addProductConfig = async ({
@@ -11,7 +14,8 @@ export const addProductConfig = async ({
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      ...params,
+      ...params.productConfig,
+      productId: params.productId,
       id: crypto.randomUUID(),
     }),
   });
