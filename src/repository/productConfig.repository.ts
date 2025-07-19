@@ -1,5 +1,3 @@
-import type { ProductConfigData } from "../types";
-
 type AddProductConfigInput = {
   params: {
     // id: string;
@@ -15,7 +13,7 @@ type AddProductConfigInput = {
 export const addProductConfig = async ({
   params,
 }: AddProductConfigInput): Promise<{ message: string }> => {
-  const response = await fetch("http://localhost:4321/api/product", {
+  const response = await fetch("http://localhost:4321/api/product-config", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -24,7 +22,7 @@ export const addProductConfig = async ({
     }),
   });
   if (response.status !== 200) {
-    throw Error("Email or password invalid");
+    throw Error("Data invalid");
   }
   return await response.json();
 };

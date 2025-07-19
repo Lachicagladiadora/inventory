@@ -31,7 +31,7 @@ export default async function seed() {
 
   await db.insert(ProductConfig).values({
     // id:"1"
-    productId: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
+    productId: "e091d5bf-ea1f-491a-a4a5-4f527739847",
     colorId: "aa92c1f3-c0ed-41fc-baeb-323478ac0ac6",
     materialId: "b1ebd01e-bf48-422c-b48e-644ba4bc3f1a",
     sizeId: "0b10e812-e0dc-4b10-94e6-289f11a17b48",

@@ -28,7 +28,7 @@ const Product = defineTable({
 
 const ProductConfig = defineTable({
   columns: {
-    id: column.text({ primaryKey: true, unique: true }),
+    id: column.text({ primaryKey: true }),
     productId: column.text(),
     colorId: column.text(),
     materialId: column.text(),
