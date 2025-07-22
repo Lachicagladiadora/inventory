@@ -22,13 +22,20 @@ export const ProductConfig = ({
   const onChangePrice = ({ e, id }: onChangeMoneyInput) => {
     const newValue = e.target.value;
     if (!RE_CHANGE_NUMBER.test(newValue)) return;
-    // if (newValue.at(-1) === ".") {
-    //   return;
-    // }
+    if (newValue.at(-1) === ".") {
+      setProductConfig((p) => {
+        const updatedList = p.map((c) => {
+          if (c.id !== id) return c;
+          return { ...c, price: newValue };
+        });
+        return updatedList;
+      });
+      return;
+    }
     setProductConfig((p) => {
       const updatedList = p.map((c) => {
         if (c.id !== id) return c;
-        return { ...c, price: newValue };
+        return { ...c, price: `${Number(newValue)}` };
       });
       return updatedList;
     });
@@ -37,13 +44,20 @@ export const ProductConfig = ({
   const onChangeDiscount = ({ e, id }: onChangeMoneyInput) => {
     const newValue = e.target.value;
     if (!RE_CHANGE_NUMBER.test(newValue)) return;
-    // if (newValue.at(-1) === ".") {
-    //   return;
-    // }
+    if (newValue.at(-1) === ".") {
+      setProductConfig((p) => {
+        const updatedList = p.map((c) => {
+          if (c.id !== id) return c;
+          return { ...c, discount: newValue };
+        });
+        return updatedList;
+      });
+      return;
+    }
     setProductConfig((p) => {
       const updatedList = p.map((c) => {
         if (c.id !== id) return c;
-        return { ...c, discount: newValue };
+        return { ...c, discount: `${Number(newValue)}` };
       });
       return updatedList;
     });
@@ -51,7 +65,7 @@ export const ProductConfig = ({
 
   useEffect(() => {
     const newConfig = generateProductConfig({ colors, materials, sizes });
-    console.log({ newConfig });
+    // console.log({ newConfig });
     setProductConfig(newConfig);
   }, [colors, materials, sizes]);
 
@@ -88,7 +102,7 @@ export const ProductConfig = ({
               </td>
               <td>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="0.00"
                   onChange={(e) =>
                     onChangePrice({
@@ -100,7 +114,7 @@ export const ProductConfig = ({
               </td>
               <td>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="0.00"
                   onChange={(e) =>
                     onChangeDiscount({

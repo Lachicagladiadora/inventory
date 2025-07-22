@@ -10,13 +10,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const body = await request.json();
     if (!body) throw Error("Exist an error in the product-config information");
     const validBody = validateProductConfig(body);
-    const data: ProductConfigSchema = {
-      ...validBody,
+    // se tiene un array, trabaja con eso, solo enviale el arreglo, recibe eso.
+
+    const data: ProductConfigSchema[] = validBody.map((c) => ({
+      ...c,
+      id: crypto.randomUUID(),
       createAt: new Date().toString(),
       updatedAt: new Date().toString(),
       createdBy: "admin",
       updatedBy: "admin",
-    };
+    }));
     await db.insert(ProductConfig).values(data);
     return new Response(
       JSON.stringify({

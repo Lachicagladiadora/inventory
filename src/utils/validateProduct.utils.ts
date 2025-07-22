@@ -1,7 +1,5 @@
 import { BRANDS, GENRE } from "../constants";
-import type { ProductSchema } from "../types";
 import {
-  IS_DATE,
   IS_DESCRIPTION,
   IS_IMAGE_PREVIEW,
   IS_TITLE,
@@ -11,7 +9,15 @@ import {
 export const verifyBrand = () => {};
 export const verifyGenre = () => {};
 
-export const validateProduct = (value: ProductSchema) => {
+export const validateProduct = (value: {
+  id: string;
+  title: string;
+  description: string;
+  categoryId: string;
+  brandId: string;
+  genre: string;
+  imagePreview: string;
+}) => {
   const id = value.id;
   const title = value.title;
   const description = value.description;
@@ -39,9 +45,5 @@ export const validateProduct = (value: ProductSchema) => {
     brandId,
     genre,
     imagePreview,
-    createAt: value.createAt,
-    updatedAt: value.updatedAt,
-    createdBy: value.createdBy,
-    updatedBy: value.updatedBy,
   };
 };

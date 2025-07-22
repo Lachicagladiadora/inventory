@@ -17,12 +17,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
       createdBy: "admin",
       updatedBy: "admin",
     };
-    const product = validateProduct(data);
-    await db.insert(Product).values(product);
+    // const newProduct = validateProduct(data);
+    await db.insert(Product).values(data);
 
     return new Response(
       JSON.stringify({
-        message: `User ${product.title} created`,
+        message: `User ${data.title} created`,
       }),
       { status: 200 }
     );

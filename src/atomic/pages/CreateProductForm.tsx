@@ -12,6 +12,8 @@ import { addProduct } from "../../repository/product.repository";
 import { RE_CHANGE_NUMBER } from "../../utils/regex.utils";
 import { getCurrentDate } from "../../utils/date.utils";
 import { ProductConfig } from "../molecules/ProductConfig";
+import { generateProductConfig } from "../../utils/array.utils";
+import { addProductConfig } from "../../repository/productConfig.repository";
 
 type CreateProductFormProps = { userId: string };
 
@@ -37,9 +39,16 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
   const onCreateProduct = async (e: any) => {
     try {
       e.preventDefault();
-      // validateUser(user);
-      await addProduct(product);
-      // setUser(EMPTY_USER);
+      const productId = crypto.randomUUID();
+      await addProduct({ ...product, id: productId });
+
+      const newConfigs = generateProductConfig({
+        colors,
+        materials,
+        sizes,
+      }).map((c) => ({ ...c, productId: productId }));
+      await addProductConfig({ params: newConfigs });
+
       navigate("/product");
     } catch (error) {
       console.error({ error });
