@@ -18,12 +18,12 @@ export const addProductConfig = async ({
 
   const data = newList.map((c) => ({
     ...c,
-    // id: crypto.randomUUID(),
+    id: crypto.randomUUID(),
   }));
   const response = await fetch("http://localhost:4321/api/product-config", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...data }),
+    body: JSON.stringify(data),
   });
   if (response.status !== 200) {
     throw Error("Data invalid");

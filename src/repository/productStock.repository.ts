@@ -1,13 +1,10 @@
-import { validateProduct } from "../utils/validateProduct.utils";
+// import { validateProduct } from "../utils/validateProduct.utils";
 
-export const addProduct = async (params: {
-  id: string;
-  title: string;
-  description: string;
-  categoryId: string;
-  brandId: string;
-  genre: string;
-  imagePreview: string;
+export const addProductStock = async (params: {
+  productId: string;
+  productConfigId: string;
+  location: string;
+  state: string;
 }): Promise<{ message: string }> => {
   // const data = validateProduct(params);
 
@@ -17,7 +14,7 @@ export const addProduct = async (params: {
     body: JSON.stringify({ ...params }),
   });
   if (response.status !== 200) {
-    throw Error("Email or password invalid");
+    throw Error("Data invalid");
   }
   return await response.json();
 };

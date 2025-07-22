@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getProtected } from "../../repository/protected.repository";
+import { navigate } from "astro/virtual-modules/transitions-router.js";
 
 export const Protected = () => {
   const [protectedData, setProtectedData] = useState(
@@ -13,6 +14,7 @@ export const Protected = () => {
       setProtectedData(response.message);
     } catch (error) {
       console.error({ error });
+      navigate("/signin");
     }
   };
 

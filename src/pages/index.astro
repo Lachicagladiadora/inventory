@@ -5,13 +5,14 @@ import Layout from "../layouts/Layout.astro";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { CreateProductButton } from "../atomic/atoms/CreateProductButton";
 
-const data = Astro.locals.user;
+const data: string | undefined = Astro.locals.user;
 const tt = Astro.locals;
-
-(() => {
-  console.log("jiji", { data }, { tt });
-  if (!data) return navigate("/signin");
-})();
+//fix
+if (!data) console.log("noooooooooo");
+if (!data) navigate("/signin");
+// (() => {
+//   console.log("jiji", { data }, { tt });
+// })();
 
 // const onCreateProductForm = () => {
 //   navigate("/createProduct");

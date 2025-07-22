@@ -40,6 +40,7 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
     try {
       e.preventDefault();
       const productId = crypto.randomUUID();
+      console.log({ productId });
       await addProduct({ ...product, id: productId });
 
       const newConfigs = generateProductConfig({

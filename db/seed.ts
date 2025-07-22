@@ -1,4 +1,4 @@
-import { db, Product, User, ProductConfig } from "astro:db";
+import { db, Product, User, ProductConfig, ProductStock } from "astro:db";
 // import { Product, User } from "./config";
 // import { asDrizzleTable } from "@astrojs/db/runtime";
 
@@ -37,6 +37,18 @@ export default async function seed() {
     sizeId: "0b10e812-e0dc-4b10-94e6-289f11a17b48",
     price: "54.90",
     discount: "0.00",
+    createAt: new Date().toString(),
+    updatedAt: new Date().toString(),
+    createdBy: "admin",
+    updatedBy: "admin",
+  });
+
+  await db.insert(ProductStock).values({
+    // id:"1"
+    productId: "e091d5bf-ea1f-491a-a4a5-4f527739847",
+    productConfigId: "e091d5bf-ea1f-491a-a4a5-4f527739847",
+    location: "here",
+    state: "new",
     createAt: new Date().toString(),
     updatedAt: new Date().toString(),
     createdBy: "admin",

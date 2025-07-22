@@ -42,6 +42,19 @@ const ProductConfig = defineTable({
   },
 });
 
+const ProductStock = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    productId: column.text(),
+    productConfigId: column.text(),
+    location: column.text(),
+    state: column.text(),
+    createAt: column.text(),
+    updatedAt: column.text(),
+    createdBy: column.text(),
+    updatedBy: column.text(),
+  },
+});
 export default defineDb({
-  tables: { User, Product, ProductConfig },
+  tables: { User, Product, ProductConfig, ProductStock },
 });

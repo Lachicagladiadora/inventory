@@ -10,7 +10,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const body = await request.json();
     if (!body) throw Error("Exist an error in the product-config information");
     const validBody = validateProductConfig(body);
-    // se tiene un array, trabaja con eso, solo enviale el arreglo, recibe eso.
 
     const data: ProductConfigSchema[] = validBody.map((c) => ({
       ...c,
@@ -28,7 +27,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
       { status: 200 }
     );
   } catch (error) {
-    console.log({ error });
     return new Response(
       JSON.stringify({
         message: `${error}`,
