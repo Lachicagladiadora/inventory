@@ -1,6 +1,6 @@
 // import { validateProduct } from "../utils/validateProduct.utils";
 
-import type { ProductStockForm } from "../types";
+import type { ProductConfigSchema, ProductStockForm } from "../types";
 
 export const addProductStock = async (
   params: ProductStockForm

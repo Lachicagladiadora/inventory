@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   type ProductConfigSchema,
   type ProductSchema,
@@ -7,10 +7,14 @@ import {
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { addProductStock } from "../../repository/productStock.repository";
 import { getProducts } from "../../repository/products.repository";
+import { getProductConfigs } from "../../repository/productConfig.repository";
+import { COLORS, MATERIALS, SIZES } from "../../constants";
 
 export const CreateStockProduct = () => {
-  const [product, setProduct] = useState<ProductSchema[]>([]);
-  const [productConfig, setProductConfig] = useState<ProductConfigSchema[]>([]);
+  const [products, setProducts] = useState<ProductSchema[]>([]);
+  const [productConfigs, setProductConfigs] = useState<ProductConfigSchema[]>(
+    []
+  );
 
   const [currentProduct, setCurrentProduct] = useState<ProductStockForm>({
     productId: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
@@ -58,20 +62,28 @@ export const CreateStockProduct = () => {
     }
   };
   // use effect para traer el product, product config, color,material,size
-  // use effect para inicializar los estados
 
-  const onGetProducts = async () => {
+  const onGetProductAndConfigs = async () => {
     try {
-      const data = await getProducts();
-      setProduct(data);
+      const productsData = await getProducts();
+      setProducts(productsData);
+      const productConfigsData = await getProductConfigs();
+
+      setProductConfigs(productConfigsData);
     } catch (error) {
       console.error({ error });
     }
   };
 
   useEffect(() => {
-    onGetProducts();
+    onGetProductAndConfigs();
   }, []);
+
+  console.log({
+    product: products,
+    productConfig: productConfigs,
+    currentProduct,
+  });
 
   return (
     <div>
@@ -87,8 +99,8 @@ export const CreateStockProduct = () => {
       >
         <label>
           Product:{" "}
-          <select name="" id="" onChange={onChangeProduct} multiple>
-            {product.map((c) => (
+          <select name="" id="" onChange={onChangeProduct}>
+            {products.map((c) => (
               <option value={c.id} key={c.id}>
                 {c.title}
               </option>
@@ -97,10 +109,28 @@ export const CreateStockProduct = () => {
         </label>
         <label>
           Product config:{" "}
-          <select name="" onChange={onChangeProductConfig} multiple>
-            {productConfig.map((c) => (
+          <select onChange={onChangeProductConfig}>
+            {productConfigs.map((c) => (
               <option value={c.id} key={c.id}>
                 {/* config en un componente */}
+                <div
+                  style={{
+                    height: "10px",
+                    width: "100px",
+                    background: `${
+                      COLORS.find((cur) => cur.id === c.colorId)?.rgb ?? "#fff"
+                    }`,
+                    border: "solid 1px #999DA0",
+                  }}
+                >
+                  {COLORS.find((cur) => cur.id === c.colorId)?.label}
+                </div>
+                <div>
+                  <p>
+                    {MATERIALS.find((cur) => cur.id === c.materialId)?.label}
+                  </p>
+                  <p>{SIZES.find((cur) => cur.id === c.sizeId)?.label}</p>
+                </div>
               </option>
             ))}
           </select>
