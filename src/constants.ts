@@ -1,4 +1,4 @@
-import type { Color, FormUser, Genre, Material, Size } from "./types";
+import type { Color, FormUser, Genre, Location, Material, Size } from "./types";
 
 export const EMPTY_USER: FormUser = {
   email: "",
@@ -69,4 +69,9 @@ export const SIZES: Size[] = [
   { id: "442cff0d-bb66-4fca-956a-5dbdc651c9f8", label: "25" },
   { id: "0b10e812-e0dc-4b10-94e6-289f11a17b48", label: "35" },
   { id: "3b7e80a2-c21b-4c70-9910-cf6dc7366cc8", label: "45" },
+];
+
+export const LOCATIONS: Location[] = [
+  { id: "91fa1595-463d-49d0-9f42-a622d33d7363", label: "Main local" },
+  { id: "221c11ad-9629-452b-9cbb-0e91248a416d", label: "Second local" },
 ];

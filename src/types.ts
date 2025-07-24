@@ -69,17 +69,28 @@ export type ProductConfigData = {
   discount: string;
 };
 
-export type ProductLocation = { id: string; label: string }[];
+export type Location = { id: string; label: string };
 export type ProductState = "good" | "bad" | "sold" | "lose";
 
 export type ProductStockSchema = {
   id: string;
   productId: string;
   productConfigId: string;
-  location: ProductLocation;
+  location: Location;
   state: ProductState;
   createAt: string;
   updatedAt: string;
   createdBy: string;
   updatedBy: string;
+};
+export type ProductStockForm = {
+  // id: string;
+  productId: string;
+  productConfigId: string;
+  location: Location[];
+  state: ProductState;
+  // createAt: string;
+  // updatedAt: string;
+  // createdBy: string;
+  // updatedBy: string;
 };
