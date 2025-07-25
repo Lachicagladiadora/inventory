@@ -62,26 +62,39 @@ export const CreateStockProduct = () => {
     }
   };
   // use effect para traer el product, product config, color,material,size
+  const getConfigsByProduct = async () => {
+    try {
+      const productConfigsData = await getProductConfigs();
+      console.log({ productConfigsData });
+      const newConfig = productConfigsData.filter(
+        (c) => c.productId === currentProduct.productId
+      );
+      setProductConfigs(newConfig);
+    } catch (error) {
+      console.error({ error });
+    }
+  };
 
-  const onGetProductAndConfigs = async () => {
+  const getAllProducts = async () => {
     try {
       const productsData = await getProducts();
       setProducts(productsData);
-      const productConfigsData = await getProductConfigs();
-
-      setProductConfigs(productConfigsData);
     } catch (error) {
       console.error({ error });
     }
   };
 
   useEffect(() => {
-    onGetProductAndConfigs();
+    getConfigsByProduct();
+  }, [currentProduct]);
+
+  useEffect(() => {
+    getAllProducts();
   }, []);
 
   console.log({
-    product: products,
-    productConfig: productConfigs,
+    products,
+    productConfigs,
     currentProduct,
   });
 
@@ -109,31 +122,37 @@ export const CreateStockProduct = () => {
         </label>
         <label>
           Product config:{" "}
-          <select onChange={onChangeProductConfig}>
-            {productConfigs.map((c) => (
+          {productConfigs.map((c) => (
+            <select
+              onChange={onChangeProductConfig}
+              style={{
+                height: "10px",
+                width: "100px",
+                background: `${
+                  COLORS.find((cur) => cur.id === c.colorId)?.rgb ?? "#fff"
+                }`,
+                border: "solid 1px #999DA0",
+              }}
+            >
               <option value={c.id} key={c.id}>
-                {/* config en un componente */}
-                <div
-                  style={{
-                    height: "10px",
-                    width: "100px",
-                    background: `${
-                      COLORS.find((cur) => cur.id === c.colorId)?.rgb ?? "#fff"
-                    }`,
-                    border: "solid 1px #999DA0",
-                  }}
-                >
-                  {COLORS.find((cur) => cur.id === c.colorId)?.label}
-                </div>
-                <div>
-                  <p>
-                    {MATERIALS.find((cur) => cur.id === c.materialId)?.label}
-                  </p>
-                  <p>{SIZES.find((cur) => cur.id === c.sizeId)?.label}</p>
-                </div>
+                {COLORS.find((cur) => cur.id === c.colorId)?.label}
               </option>
-            ))}
-          </select>
+            </select>
+          ))}
+          {productConfigs.map((c) => (
+            <select onChange={onChangeProductConfig}>
+              <option value={c.id} key={c.id}>
+                {MATERIALS.find((cur) => cur.id === c.materialId)?.label}
+              </option>
+            </select>
+          ))}
+          {productConfigs.map((c) => (
+            <select onChange={onChangeProductConfig}>
+              <option value={c.id} key={c.id}>
+                {SIZES.find((cur) => cur.id === c.sizeId)?.label}
+              </option>
+            </select>
+          ))}
         </label>
         {/* <ProductConfig colors={colors} materials={materials} sizes={sizes} /> */}
         <button>Save</button>

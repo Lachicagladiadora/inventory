@@ -18,6 +18,8 @@ import { addProductConfig } from "../../repository/productConfig.repository";
 type CreateProductFormProps = { userId: string };
 
 export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
+  const [currentPage, setCurrentPage] = useState<"form" | "modal">("form");
+
   const [sizes, setSizes] = useState<Size[]>([]);
   const [colors, setColors] = useState<Color[]>([]);
   const [materials, setMaterials] = useState<Material[]>([]);
@@ -47,10 +49,12 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
         colors,
         materials,
         sizes,
-      }).map((c) => ({ ...c, productId: productId }));
+      }).map((c) => ({ ...c, productId }));
+      console.log({ newConfigs });
       await addProductConfig({ params: newConfigs });
 
-      navigate("/product");
+      // navigate("/product/stock");
+      setCurrentPage("modal");
     } catch (error) {
       console.error({ error });
     }
@@ -102,102 +106,126 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
   };
 
   return (
-    <form
-      onSubmit={(e) => onCreateProduct(e)}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "end",
-        gap: "20px",
-      }}
-    >
-      <label>
-        Title:{" "}
-        <input
-          type="title"
-          value={product.title}
-          onChange={(e) => setProduct((p) => ({ ...p, title: e.target.value }))}
-        />
-      </label>
-      <label>
-        Description:{" "}
-        <textarea
-          value={product.description}
-          onChange={(e) =>
-            setProduct((p) => ({ ...p, description: e.target.value }))
-          }
-        />
-      </label>
-      <label>
-        Category:{" "}
-        <select name="" id="">
-          {CATEGORIES.map((c) => (
-            <option value={c.id} key={c.id}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Brands:{" "}
-        <select name="" id="" onChange={(e) => onChangeBrand(e)}>
-          {BRANDS.map((c) => (
-            <option value={c.id} key={c.id}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Genre:{" "}
-        <input
-          type="genre"
-          value={product.genre}
-          onChange={(e) => setProduct((p) => ({ ...p, genre: e.target.value }))}
-        />
-      </label>
-      <label>
-        URL Image:{" "}
-        <input
-          type="imagePreview"
-          value={product.imagePreview}
-          onChange={(e) =>
-            setProduct((p) => ({ ...p, imagePreview: e.target.value }))
-          }
-        />
-      </label>
-      <label>
-        Color:{" "}
-        <select name="" onChange={onChangeColorMultiple} multiple>
-          {COLORS.map((c) => (
-            <option value={c.id} key={c.id}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Material:{" "}
-        <select name="" id="" onChange={onChangeMaterialMultiple} multiple>
-          {MATERIALS.map((c) => (
-            <option value={c.id} key={c.id}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Size:{" "}
-        <select name="" onChange={onChangeSizeMultiple} multiple>
-          {SIZES.map((c) => (
-            <option value={c.id} key={c.id}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <ProductConfig colors={colors} materials={materials} sizes={sizes} />
-      <button>Save</button>
-    </form>
+    <>
+      {currentPage === "modal" && (
+        <div className="h-full min-h-dvh flex gap-8 items-center justify-center">
+          <button
+            className="p-6 bg-amber-200"
+            onClick={() => navigate("/product/create")}
+          >
+            Create another Product
+          </button>
+          <button
+            className="p-6 bg-orange-500"
+            onClick={() => navigate("/product/stock")}
+          >
+            Add stock to Product created
+          </button>
+        </div>
+      )}
+      {currentPage === "form" && (
+        <form
+          onSubmit={(e) => onCreateProduct(e)}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "end",
+            gap: "20px",
+          }}
+        >
+          <label>
+            Title:{" "}
+            <input
+              type="title"
+              value={product.title}
+              onChange={(e) =>
+                setProduct((p) => ({ ...p, title: e.target.value }))
+              }
+            />
+          </label>
+          <label>
+            Description:{" "}
+            <textarea
+              value={product.description}
+              onChange={(e) =>
+                setProduct((p) => ({ ...p, description: e.target.value }))
+              }
+            />
+          </label>
+          <label>
+            Category:{" "}
+            <select name="" id="">
+              {CATEGORIES.map((c) => (
+                <option value={c.id} key={c.id}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Brands:{" "}
+            <select name="" id="" onChange={(e) => onChangeBrand(e)}>
+              {BRANDS.map((c) => (
+                <option value={c.id} key={c.id}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Genre:{" "}
+            <input
+              type="genre"
+              value={product.genre}
+              onChange={(e) =>
+                setProduct((p) => ({ ...p, genre: e.target.value }))
+              }
+            />
+          </label>
+          <label>
+            URL Image:{" "}
+            <input
+              type="imagePreview"
+              value={product.imagePreview}
+              onChange={(e) =>
+                setProduct((p) => ({ ...p, imagePreview: e.target.value }))
+              }
+            />
+          </label>
+          <label>
+            Color:{" "}
+            <select name="" onChange={onChangeColorMultiple} multiple>
+              {COLORS.map((c) => (
+                <option value={c.id} key={c.id}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Material:{" "}
+            <select name="" id="" onChange={onChangeMaterialMultiple} multiple>
+              {MATERIALS.map((c) => (
+                <option value={c.id} key={c.id}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Size:{" "}
+            <select name="" onChange={onChangeSizeMultiple} multiple>
+              {SIZES.map((c) => (
+                <option value={c.id} key={c.id}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <ProductConfig colors={colors} materials={materials} sizes={sizes} />
+          <button>Save</button>
+        </form>
+      )}
+    </>
   );
 };

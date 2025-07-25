@@ -19,6 +19,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
       createdBy: "admin",
       updatedBy: "admin",
     }));
+    // productId is not same
+    console.log({ data });
     await db.insert(ProductConfig).values(data);
     return new Response(
       JSON.stringify({
