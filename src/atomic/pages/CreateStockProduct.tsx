@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import {
+  type Color,
+  type Material,
   type ProductConfigSchema,
   type ProductSchema,
   type ProductStockForm,
+  type Size,
 } from "../../types";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { addProductStock } from "../../repository/productStock.repository";
@@ -15,6 +18,11 @@ export const CreateStockProduct = () => {
   const [productConfigs, setProductConfigs] = useState<ProductConfigSchema[]>(
     []
   );
+
+  const [colors, setColors] = useState<Color[]>([]);
+  const [materials, setMaterials] = useState<Material[]>([]);
+  const [sizes, setSizes] = useState<Size[]>([]);
+  const [config, setConfig] = useState<ProductConfigSchema>(productConfigs[0]);
 
   const [currentProduct, setCurrentProduct] = useState<ProductStockForm>({
     productId: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
@@ -61,19 +69,11 @@ export const CreateStockProduct = () => {
       console.error({ error });
     }
   };
-  // use effect para traer el product, product config, color,material,size
-  const getConfigsByProduct = async () => {
-    try {
-      const productConfigsData = await getProductConfigs();
-      console.log({ productConfigsData });
-      const newConfig = productConfigsData.filter(
-        (c) => c.productId === currentProduct.productId
-      );
-      setProductConfigs(newConfig);
-    } catch (error) {
-      console.error({ error });
-    }
+
+  const onChangeConfigByColor = (e: any) => {
+    // change config by color selected, show color in the side
   };
+  // use effect para traer el product, product config, color,material,size
 
   const getAllProducts = async () => {
     try {
@@ -84,19 +84,40 @@ export const CreateStockProduct = () => {
     }
   };
 
-  useEffect(() => {
-    getConfigsByProduct();
-  }, [currentProduct]);
+  const getConfigsByProduct = async (productId: string) => {
+    try {
+      const productConfigsData = await getProductConfigs();
+      console.log({ productConfigsData });
+      const configsByProducts = productConfigsData.filter(
+        (c) => c.productId === productId
+      );
+      const colorsByConfig = configsByProducts.map((c) =>
+        COLORS.find((cur) => cur.id === c.colorId)
+      ) as Color[];
+      setProductConfigs(configsByProducts);
+      setConfig(configsByProducts[0]);
+      setColors([...new Set(colorsByConfig)]);
+      console.log({ colorsByConfig, colors });
+    } catch (error) {
+      console.error({ error });
+    }
+  };
 
   useEffect(() => {
     getAllProducts();
   }, []);
+
+  useEffect(() => {
+    getConfigsByProduct(currentProduct.productId);
+  }, [currentProduct]);
 
   console.log({
     products,
     productConfigs,
     currentProduct,
   });
+
+  // useEffect(()=>{},[])
 
   return (
     <div>
@@ -122,7 +143,22 @@ export const CreateStockProduct = () => {
         </label>
         <label>
           Product config:{" "}
-          {productConfigs.map((c) => (
+          <div
+            style={{
+              background: `${COLORS.find((c) => c.id === config.colorId)?.rgb}`,
+              width: "20px",
+              height: "20px",
+              borderRadius: "10px",
+            }}
+          ></div>
+          <select onChange={(e) => onChangeConfigByColor(e)}>
+            {colors.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.label}
+              </option>
+            ))}
+          </select>
+          {/* {productConfigs.map((c) => (
             <select
               onChange={onChangeProductConfig}
               style={{
@@ -134,9 +170,11 @@ export const CreateStockProduct = () => {
                 border: "solid 1px #999DA0",
               }}
             >
-              <option value={c.id} key={c.id}>
-                {COLORS.find((cur) => cur.id === c.colorId)?.label}
-              </option>
+              {COLORS.filter((cur) => cur.id === c.colorId).map((cur) => (
+                <option value={cur.id} key={cur.id}>
+                  {cur.label}
+                </option>
+              ))}
             </select>
           ))}
           {productConfigs.map((c) => (
@@ -152,7 +190,7 @@ export const CreateStockProduct = () => {
                 {SIZES.find((cur) => cur.id === c.sizeId)?.label}
               </option>
             </select>
-          ))}
+          ))} */}
         </label>
         {/* <ProductConfig colors={colors} materials={materials} sizes={sizes} /> */}
         <button>Save</button>

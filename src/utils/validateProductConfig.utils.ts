@@ -5,7 +5,6 @@ export const verifyGenre = () => {};
 
 export const validateProductConfig = (
   value: {
-    // id: string;
     productId: string;
     colorId: string;
     materialId: string;
@@ -15,36 +14,26 @@ export const validateProductConfig = (
   }[]
 ) => {
   const data = value.map((c) => {
-    // const id = c.id;
-    const productId = c.colorId;
-    const colorId = c.colorId;
-    const materialId = c.materialId;
-    const sizeId = c.sizeId;
-    const price = c.price;
-    const discount = c.discount;
-
-    // if (!IS_UUID.test(id)) throw Error("'id' invalid");
-    if (!IS_UUID.test(productId))
+    if (!IS_UUID.test(c.productId))
       throw Error("Your 'product' selected isn't correct");
-    if (!IS_UUID.test(colorId))
+    if (!IS_UUID.test(c.colorId))
       throw Error("Your 'color' selected isn't correct");
-    if (!IS_UUID.test(materialId))
+    if (!IS_UUID.test(c.materialId))
       throw Error("Your 'material' selected isn't correct");
-    if (!IS_UUID.test(sizeId))
+    if (!IS_UUID.test(c.sizeId))
       throw Error("Your 'size' selected isn't correct");
-    if (!RE_POSITIVE_NUMBER.test(price))
+    if (!RE_POSITIVE_NUMBER.test(c.price))
       throw Error("The price is not a number");
-    if (!RE_POSITIVE_NUMBER.test(discount))
+    if (!RE_POSITIVE_NUMBER.test(c.discount))
       throw Error("Your have an error in the 'imagePreview'");
 
     return {
-      // id,
-      productId,
-      colorId,
-      materialId,
-      sizeId,
-      price,
-      discount,
+      productId: c.productId,
+      colorId: c.colorId,
+      materialId: c.materialId,
+      sizeId: c.sizeId,
+      price: c.price,
+      discount: c.discount,
     };
   });
   return data;

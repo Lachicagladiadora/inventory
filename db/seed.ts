@@ -31,7 +31,7 @@ export default async function seed() {
 
   await db.insert(ProductConfig).values({
     id: "3fabbf8f-8acf-4a9c-96ff-1a99605269ed",
-    productId: "e091d5bf-ea1f-491a-a4a5-4f527739847",
+    productId: "3ecd9571-4014-4106-8621-c4e6642f9a9e",
     colorId: "aa92c1f3-c0ed-41fc-baeb-323478ac0ac6",
     materialId: "b1ebd01e-bf48-422c-b48e-644ba4bc3f1a",
     sizeId: "0b10e812-e0dc-4b10-94e6-289f11a17b48",
@@ -45,8 +45,8 @@ export default async function seed() {
 
   await db.insert(ProductStock).values({
     id: "9b58595e-ffd8-43f6-b530-93da8476de00",
-    productId: "e091d5bf-ea1f-491a-a4a5-4f527739847",
-    productConfigId: "e091d5bf-ea1f-491a-a4a5-4f527739847",
+    productId: "3ecd9571-4014-4106-8621-c4e6642f9a9e",
+    productConfigId: "3fabbf8f-8acf-4a9c-96ff-1a99605269ed",
     location: "here",
     state: "new",
     createAt: new Date().toString(),
