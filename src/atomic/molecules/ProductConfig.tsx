@@ -65,7 +65,6 @@ export const ProductConfig = ({
 
   useEffect(() => {
     const newConfig = generateProductConfig({ colors, materials, sizes });
-    // console.log({ newConfig });
     setProductConfig(newConfig);
   }, [colors, materials, sizes]);
 

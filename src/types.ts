@@ -12,17 +12,12 @@ export type Material = { id: string; label: string; imageSVG: string };
 export type Size = { id: string; label: string };
 
 export type FormProduct = {
-  // id: string;
   title: string;
   description: string;
   categoryId: string;
   brandId: string;
   genre: string;
   imagePreview: string;
-  // createAt: string;
-  // updatedAt: string;
-  // createdBy: string;
-  // updatedBy: string;
 };
 
 export type Genre = "female" | "male" | "unisex";
@@ -84,13 +79,8 @@ export type ProductStockSchema = {
   updatedBy: string;
 };
 export type ProductStockForm = {
-  // id: string;
   productId: string;
   productConfigId: string;
   location: Location[];
   state: ProductState;
-  // createAt: string;
-  // updatedAt: string;
-  // createdBy: string;
-  // updatedBy: string;
 };

@@ -7,10 +7,10 @@ import {
   type Material,
   type ProductConfigSchema,
   type ProductSchema,
-  type ProductStockForm,
   type Size,
 } from "../../types";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
+import { addProductStock } from "../../repository/productStock.repository";
 import { getProducts } from "../../repository/products.repository";
 import { getProductConfigs } from "../../repository/productConfig.repository";
 import { COLORS, MATERIALS, SIZES } from "../../constants";
@@ -41,44 +41,26 @@ export const CreateStockProduct = () => {
   const onCreateProductStock = async (e: any) => {
     try {
       e.preventDefault();
-      // await addProductStock(currentProduct);
+      if (!currentProduct) return;
+      await addProductStock({
+        productId: currentProduct.id,
+        location: [
+          { id: "91fa1595-463d-49d0-9f42-a622d33d7363", label: "Main local" },
+        ],
+        productConfigId: currentConfig.id,
+        state: "good",
+      });
       navigate("/product");
     } catch (error) {
       console.error({ error });
     }
   };
 
-  const onChangeProduct = (e: any) => {
-    try {
-      const newValue = e.target.value;
-      // setCurrentProduct((p) => ({ ...p, productId: newValue }));
-    } catch (error) {
-      console.error({ error });
-    }
-  };
-
-  const onChangeProductConfig = (e: any) => {
-    try {
-      const newValue = e.target.value;
-      setCurrentProduct((p) => ({ ...p, productConfigId: newValue }));
-    } catch (error) {
-      console.error({ error });
-    }
-  };
-
-  const onChangeConfigByColor = (e: any) => {
-    // change config by color selected, show color in the side
-  };
-  // use effect para traer el product, product config, color,material,size
-  const onChangeConfigByMaterial = (e: any) => {};
-  const onChangeConfigBySize = (e: any) => {};
-
   const getAllProducts = async () => {
     try {
       const productsData = await getProducts();
       console.log({ productsData });
       setProducts(productsData);
-      // setCurrentProduct(productsData[-1]);
     } catch (error) {
       console.error({ error });
     }
@@ -87,36 +69,21 @@ export const CreateStockProduct = () => {
   const getConfigsByProduct = async () => {
     try {
       const productConfigsData = await getProductConfigs();
-      //  setCurrentProduct
       const configsByProducts = productConfigsData.filter(
         (c) => c.productId === currentProduct?.id
       );
-      console.log({ productConfigsData, configsByProducts });
       setConfigs(configsByProducts);
       setCurrentConfig(configsByProducts[-1]);
-      // console.log({ configsByProducts });
-      // setCurrentConfig(configsByProducts[0]);
-
-      // const materialsByConfig = configsByProducts.map((c) =>
-      //   MATERIALS.find((cur) => cur.id === c.colorId)
-      // ) as Material[];
-
-      // setMaterials([...new Set(materialsByConfig)]);
-      // console.log({ colorsByConfig, colors });
     } catch (error) {
       console.error({ error });
     }
   };
 
   useEffect(() => {
-    if (configs.length === 0) {
-      console.log("don't exist configs");
-      return;
-    }
+    if (configs.length === 0) return;
     const colorsByConfig = configs.map((c) =>
       COLORS.find((cur) => cur.id === c.colorId)
     ) as Color[];
-    console.log({ colorsByConfig });
     setColors([...new Set(colorsByConfig)]);
   }, [configs]);
 
@@ -139,64 +106,42 @@ export const CreateStockProduct = () => {
   }, [configs]);
 
   useEffect(() => {
-    // filtrar las configuraciones con cierto color
-    if (!currentConfig) {
-      console.log("don't exist currentConfig");
-      return;
-    }
+    if (!currentConfig) return;
     const oldConfig = configs.find((c) => c.id === currentConfig.id);
-    console.log({
-      configs,
-      oldConfig,
-    });
+
     if (!oldConfig) return;
     if (oldConfig.colorId !== currentConfig.colorId) {
-      console.log("jiji");
-      const tt = configs.filter((c) => c.colorId === currentConfig.colorId);
-
       const materialsByConfig = configs.map((c) =>
         MATERIALS.find((cur) => cur.id === c.materialId)
       ) as Material[];
-      console.log({ materialsByConfig });
       setMaterials([...new Set(materialsByConfig)]);
 
       const sizesByConfig = configs.map((c) =>
         SIZES.find((cur) => cur.id === c.sizeId)
       ) as Size[];
-      console.log({ sizesByConfig });
       setSizes([...new Set(sizesByConfig)]);
-      console.log({ tt });
     }
     if (oldConfig.materialId !== currentConfig.materialId) {
-      console.log("jojo");
       const colorsByConfig = configs.map((c) =>
         COLORS.find((cur) => cur.id === c.colorId)
       ) as Color[];
-      console.log({ colorsByConfig });
       setColors([...new Set(colorsByConfig)]);
       const sizesByConfig = configs.map((c) =>
         SIZES.find((cur) => cur.id === c.sizeId)
       ) as Size[];
-      console.log({ sizesByConfig });
       setSizes([...new Set(sizesByConfig)]);
     }
     if (oldConfig.sizeId !== currentConfig.sizeId) {
-      console.log("jaja");
       const materialsByConfig = configs.map((c) =>
         MATERIALS.find((cur) => cur.id === c.materialId)
       ) as Material[];
-      console.log({ materialsByConfig });
       setMaterials([...new Set(materialsByConfig)]);
       const colorsByConfig = configs.map((c) =>
         COLORS.find((cur) => cur.id === c.colorId)
       ) as Color[];
-      console.log({ colorsByConfig });
       setColors([...new Set(colorsByConfig)]);
     }
-    console.log("juju");
   }, [currentConfig]);
-
-  console.log({ currentConfig, configs });
 
   return (
     <div>

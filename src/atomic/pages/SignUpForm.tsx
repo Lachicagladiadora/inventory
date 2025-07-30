@@ -6,11 +6,11 @@ import { validateUser } from "../../utils/validateUser.utils";
 import type { FormUser } from "../../types";
 
 export const SignUpForm = () => {
-  // const [newUser, setNewUser] = useState<FormUser>(EMPTY_USER);
-  const [newUser, setNewUser] = useState<FormUser>({
-    email: "pu@gmail.com",
-    password: "asdfghjk",
-  });
+  const [newUser, setNewUser] = useState<FormUser>(EMPTY_USER);
+  // const [newUser, setNewUser] = useState<FormUser>({
+  //   email: "pu@gmail.com",
+  //   password: "asdfghjk",
+  // });
 
   const onCreateNewUser = async (e: any) => {
     try {
@@ -52,9 +52,6 @@ export const SignUpForm = () => {
           }
         />
       </label>
-      {/* <label>
-        Confirm password: <input type="text" />
-      </label> */}
       <button>Create account</button>
     </form>
   );

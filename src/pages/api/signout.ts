@@ -13,7 +13,6 @@ export const POST: APIRoute = async ({ cookies }) => {
       })
     );
   } catch (error) {
-    console.error({ error });
     return new Response(
       JSON.stringify({
         message: `${error}`,

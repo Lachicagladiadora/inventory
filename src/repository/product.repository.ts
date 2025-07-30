@@ -1,5 +1,3 @@
-import { validateProduct } from "../utils/validateProduct.utils";
-
 export const addProduct = async (params: {
   id: string;
   title: string;
@@ -9,8 +7,6 @@ export const addProduct = async (params: {
   genre: string;
   imagePreview: string;
 }): Promise<{ message: string }> => {
-  // const data = validateProduct(params);
-
   const response = await fetch("http://localhost:4321/api/product", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
