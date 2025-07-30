@@ -5,6 +5,7 @@ import { SignOutButton } from "../atomic/atoms/SignOutButton";
 import Layout from "../layouts/Layout.astro";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { CreateProductButton } from "../atomic/atoms/CreateProductButton";
+import { CreateStockProductButton } from "../atomic/atoms/CreateStockProductButton";
 
 const data: string | undefined = Astro.locals.user;
 const tt = Astro.locals;
@@ -24,6 +25,7 @@ if (!data) navigate("/signin");
   <main>
     <h1>Inventory</h1>
     <CreateProductButton client:idle />
+    <CreateStockProductButton client:idle />
     <SignOutButton client:idle />
     <Protected client:idle />
   </main>

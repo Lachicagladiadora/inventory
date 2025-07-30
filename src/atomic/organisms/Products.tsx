@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import type { ProductSchema } from "../../types";
 import { Product } from "../molecules/Product";
 import { getProducts } from "../../repository/products.repository";
@@ -22,10 +22,13 @@ export const Products = () => {
   }, []);
   return (
     <>
+      <a href="/" class="bg-pink-600">
+        create new product or new stock
+      </a>
       {!productList && <p>You don't have access</p>}
       {productList === "Loading" && <div>{productList}</div>}
       {productList && productList !== "Loading" && productList.length > 0 && (
-        <div>
+        <div className="flex gap-3 flex-wrap">
           {productList.map((c) => (
             <Product data={c} key={c.id} />
           ))}

@@ -42,7 +42,6 @@ export const CreateStockProduct = () => {
     try {
       e.preventDefault();
       // await addProductStock(currentProduct);
-
       navigate("/product");
     } catch (error) {
       console.error({ error });
@@ -79,22 +78,24 @@ export const CreateStockProduct = () => {
       const productsData = await getProducts();
       console.log({ productsData });
       setProducts(productsData);
+      // setCurrentProduct(productsData[-1]);
     } catch (error) {
       console.error({ error });
     }
   };
 
-  const getConfigsByProduct = async (productId: string) => {
+  const getConfigsByProduct = async () => {
     try {
       const productConfigsData = await getProductConfigs();
-      console.log({ productConfigsData });
+      //  setCurrentProduct
       const configsByProducts = productConfigsData.filter(
-        (c) => c.productId === productId
+        (c) => c.productId === currentProduct?.id
       );
-
+      console.log({ productConfigsData, configsByProducts });
       setConfigs(configsByProducts);
-      console.log({ configsByProducts });
-      setCurrentConfig(configsByProducts[0]);
+      setCurrentConfig(configsByProducts[-1]);
+      // console.log({ configsByProducts });
+      // setCurrentConfig(configsByProducts[0]);
 
       // const materialsByConfig = configsByProducts.map((c) =>
       //   MATERIALS.find((cur) => cur.id === c.colorId)
@@ -124,15 +125,18 @@ export const CreateStockProduct = () => {
   }, []);
 
   useEffect(() => {
-    getConfigsByProduct(currentProduct?.id);
+    setCurrentProduct(products[-1]);
+  }, [products]);
+
+  useEffect(() => {
+    getConfigsByProduct();
   }, [currentProduct]);
 
-  // console.log({
-  //   products,
-  //   config,
-  //   productConfigs,
-  //   currentProduct,
-  // });
+  useEffect(() => {
+    const newValue = configs.at(-1);
+    if (!newValue) return;
+    setCurrentConfig(newValue);
+  }, [configs]);
 
   useEffect(() => {
     // filtrar las configuraciones con cierto color
@@ -141,20 +145,59 @@ export const CreateStockProduct = () => {
       return;
     }
     const oldConfig = configs.find((c) => c.id === currentConfig.id);
-    console.log({ oldConfig });
+    console.log({
+      configs,
+      oldConfig,
+    });
     if (!oldConfig) return;
     if (oldConfig.colorId !== currentConfig.colorId) {
       console.log("jiji");
+      const tt = configs.filter((c) => c.colorId === currentConfig.colorId);
+
+      const materialsByConfig = configs.map((c) =>
+        MATERIALS.find((cur) => cur.id === c.materialId)
+      ) as Material[];
+      console.log({ materialsByConfig });
+      setMaterials([...new Set(materialsByConfig)]);
+
+      const sizesByConfig = configs.map((c) =>
+        SIZES.find((cur) => cur.id === c.sizeId)
+      ) as Size[];
+      console.log({ sizesByConfig });
+      setSizes([...new Set(sizesByConfig)]);
+      console.log({ tt });
     }
     if (oldConfig.materialId !== currentConfig.materialId) {
       console.log("jojo");
+      const colorsByConfig = configs.map((c) =>
+        COLORS.find((cur) => cur.id === c.colorId)
+      ) as Color[];
+      console.log({ colorsByConfig });
+      setColors([...new Set(colorsByConfig)]);
+      const sizesByConfig = configs.map((c) =>
+        SIZES.find((cur) => cur.id === c.sizeId)
+      ) as Size[];
+      console.log({ sizesByConfig });
+      setSizes([...new Set(sizesByConfig)]);
     }
     if (oldConfig.sizeId !== currentConfig.sizeId) {
       console.log("jaja");
+      const materialsByConfig = configs.map((c) =>
+        MATERIALS.find((cur) => cur.id === c.materialId)
+      ) as Material[];
+      console.log({ materialsByConfig });
+      setMaterials([...new Set(materialsByConfig)]);
+      const colorsByConfig = configs.map((c) =>
+        COLORS.find((cur) => cur.id === c.colorId)
+      ) as Color[];
+      console.log({ colorsByConfig });
+      setColors([...new Set(colorsByConfig)]);
     }
     console.log("juju");
   }, [currentConfig]);
-  console.log({ currentConfig });
+
+  console.log({ currentConfig, configs });
+
   return (
     <div>
       <h2>Update stock</h2>
@@ -170,9 +213,9 @@ export const CreateStockProduct = () => {
         <label className="flex gap-2">
           Product:
           <select
-          // onChange={(e) =>
-          //   setCurrentConfig((p) => ({ ...p, colorId: e.target.value }))
-          // }
+            onChange={(e) =>
+              setCurrentProduct(products.find((c) => c.id === e.target.value))
+            }
           >
             {products.map((c) => (
               <option key={c.id} value={c.id}>
