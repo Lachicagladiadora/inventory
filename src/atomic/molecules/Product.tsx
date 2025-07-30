@@ -19,7 +19,6 @@ export const Product = ({ data }: ProductProps) => {
       COLORS.find((cur) => cur.id === c.colorId)
     ) as Color[];
     setColors([...new Set(colorsByConfigs)]);
-    // return colorsByConfigs;
   };
 
   useEffect(() => {

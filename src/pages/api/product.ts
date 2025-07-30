@@ -1,8 +1,5 @@
 import type { APIRoute } from "astro";
 import { db, Product } from "astro:db";
-// import { validateProduct } from "../../utils/validateProduct.utils";
-
-// export const prerender = false;
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
@@ -18,7 +15,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
       updatedBy: "admin",
     };
     console.log({ data });
-    // const newProduct = validateProduct(data);
     await db.insert(Product).values(data);
 
     return new Response(

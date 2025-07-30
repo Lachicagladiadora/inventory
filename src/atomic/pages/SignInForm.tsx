@@ -6,16 +6,16 @@ import type { FormUser } from "../../types";
 import { validateUser } from "../../utils/validateUser.utils";
 
 export const SignInForm = () => {
-  // const [user, setUser] = useState<FormUser>(EMPTY_USER);
-  const [user, setUser] = useState<FormUser>({
-    email: "pu@gmail.com",
-    password: "asdfghjk",
-  });
+  const [user, setUser] = useState<FormUser>(EMPTY_USER);
+  // const [user, setUser] = useState<FormUser>({
+  //   email: "pu@gmail.com",
+  //   password: "asdfghjk",
+  // });
 
   const onSignIn = async (e: any) => {
     try {
       e.preventDefault();
-      if(!validateUser(user)) return
+      if (!validateUser(user)) return;
       await signIn(user);
       setUser(EMPTY_USER);
       navigate("/");
@@ -50,9 +50,6 @@ export const SignInForm = () => {
           onChange={(e) => setUser((p) => ({ ...p, password: e.target.value }))}
         />
       </label>
-      {/* <label>
-        Confirm password: <input type="text" />
-      </label> */}
       <button>Sign in</button>
     </form>
   );

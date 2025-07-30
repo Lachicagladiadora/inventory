@@ -19,7 +19,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
       createdBy: "admin",
       updatedBy: "admin",
     }));
-    // productId is not same
     console.log({ data });
     await db.insert(ProductConfig).values(data);
     return new Response(
@@ -43,10 +42,8 @@ export const GET: APIRoute = async (context): Promise<Response> => {
     const user = context.locals.user;
     if (!user) throw Error("You need access for this content");
     const productsConfigs = await db.select().from(ProductConfig);
-    // console.log({ productsConfigs });
     return new Response(JSON.stringify(productsConfigs), { status: 200 });
   } catch (error) {
-    console.log({ error });
     return new Response(
       JSON.stringify({
         message: `${error}`,

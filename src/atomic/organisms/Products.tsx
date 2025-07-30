@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ProductSchema } from "../../types";
 import { Product } from "../molecules/Product";
 import { getProducts } from "../../repository/products.repository";

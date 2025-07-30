@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { navigate } from "astro:transitions/client";
 import { BRANDS, CATEGORIES, COLORS, MATERIALS, SIZES } from "../../constants";
-import type {
-  Color,
-  FormProduct,
-  Material,
-  ProductConfigData,
-  Size,
-} from "../../types";
+import type { Color, FormProduct, Material, Size } from "../../types";
 import { addProduct } from "../../repository/product.repository";
-import { RE_CHANGE_NUMBER } from "../../utils/regex.utils";
-import { getCurrentDate } from "../../utils/date.utils";
 import { ProductConfig } from "../molecules/ProductConfig";
 import { generateProductConfig } from "../../utils/array.utils";
 import { addProductConfig } from "../../repository/productConfig.repository";
@@ -25,7 +17,6 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
   const [materials, setMaterials] = useState<Material[]>([]);
 
   const [product, setProduct] = useState<FormProduct>({
-    // id: "022a6a51-0270-4be0-bda6-0a8dbf04129d",
     title: "Thunderbolt sneakers",
     description:
       "for fly for fly for fly for fly for fly for fly v vvfor flyvv for flyfor flyfor flyfor fly for flyfor flyfor fly",
@@ -36,13 +27,10 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
       "https://auctions.c.yimg.jp/images.auctions.yahoo.co.jp/image/dr000/auc0407/users/c1fff615136a2fcf4b5e8fc23bc24acaf926e085/i-img1118x1200-16881753160owdym15.jpg",
   });
 
-  // const createConfigs
-
   const onCreateProduct = async (e: any) => {
     try {
       e.preventDefault();
       const productId = crypto.randomUUID();
-      console.log({ productId });
       await addProduct({ ...product, id: productId });
 
       const newConfigs = generateProductConfig({
@@ -50,10 +38,8 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
         materials,
         sizes,
       }).map((c) => ({ ...c, productId }));
-      console.log({ newConfigs });
       await addProductConfig({ params: newConfigs });
 
-      // navigate("/product/stock");
       setCurrentPage("modal");
     } catch (error) {
       console.error({ error });
@@ -62,7 +48,6 @@ export const CreateProductForm = ({ userId }: CreateProductFormProps) => {
 
   const onChangeBrand = (e: any) => {
     const newValue = e.target.value;
-    // const newId =
     setProduct((p) => ({ ...p, brandId: newValue }));
   };
 
