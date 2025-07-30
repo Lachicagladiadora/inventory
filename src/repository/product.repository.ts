@@ -1,3 +1,9 @@
+export function GET(context) {
+  const runtime = context.locals.runtime;
+
+  return new Response("Some body");
+}
+
 export const addProduct = async (params: {
   id: string;
   title: string;

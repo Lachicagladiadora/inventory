@@ -7,6 +7,7 @@ import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { CreateProductButton } from "../atomic/atoms/CreateProductButton";
 import { CreateStockProductButton } from "../atomic/atoms/CreateStockProductButton";
 
+const { env } = Astro.locals.runtime;
 const data: string | undefined = Astro.locals.user;
 //fix
 if (!data) console.log("noooooooooo");
