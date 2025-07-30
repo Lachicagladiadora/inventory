@@ -1,0 +1,9 @@
+---
+import "../../../src/styles/global.css";
+import { CreateStockProduct } from "../../atomic/pages/CreateStockProduct";
+
+const data = Astro.locals.user;
+console.log({ data });
+---
+
+<CreateStockProduct client:idle />

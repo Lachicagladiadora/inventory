@@ -1,0 +1,7 @@
+POST http://localhost:4321/api/signin HTTP/1.1
+content-type: application/json
+
+{
+    "email": "pu@gmail.com",
+    "password": "asdfghjk"
+}

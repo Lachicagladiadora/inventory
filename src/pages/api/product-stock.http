@@ -1,0 +1,10 @@
+POST http://localhost:4321/api/product-stock HTTP/1.1
+content-type: application/json
+
+{
+    "id":"7c40b422-2a17-4d78-968e-8156ae247560",
+    "productId": "022a6a51-0270-4be0-bda6-0a8dbf04129d",
+    "productConfigId": "4ebb7ae2-b45c-45ab-a6d1-f936afc9d080",
+    "location": "far far away",
+    "state": "good"
+}

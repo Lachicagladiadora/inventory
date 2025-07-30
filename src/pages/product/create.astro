@@ -1,0 +1,8 @@
+---
+import { CreateProductForm } from "../../atomic/pages/CreateProductForm";
+
+const data = Astro.locals.user;
+console.log({ data });
+---
+
+<CreateProductForm userId="admin" client:idle />

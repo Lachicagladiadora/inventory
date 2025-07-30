@@ -15,7 +15,7 @@ export const SignInForm = () => {
   const onSignIn = async (e: any) => {
     try {
       e.preventDefault();
-      validateUser(user);
+      if(!validateUser(user)) return
       await signIn(user);
       setUser(EMPTY_USER);
       navigate("/");

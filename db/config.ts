@@ -9,6 +9,52 @@ const User = defineTable({
     password: column.text(),
   },
 });
+
+const Product = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    title: column.text({ unique: true }),
+    description: column.text(),
+    categoryId: column.text(),
+    brandId: column.text(),
+    genre: column.text(),
+    imagePreview: column.text(),
+    createAt: column.text(),
+    updatedAt: column.text(),
+    createdBy: column.text(),
+    updatedBy: column.text(),
+  },
+});
+
+const ProductConfig = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    productId: column.text(),
+    colorId: column.text(),
+    materialId: column.text(),
+    sizeId: column.text(),
+    price: column.text(),
+    discount: column.text(),
+    createAt: column.text(),
+    updatedAt: column.text(),
+    createdBy: column.text(),
+    updatedBy: column.text(),
+  },
+});
+
+const ProductStock = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    productId: column.text(),
+    productConfigId: column.text(),
+    location: column.text(),
+    state: column.text(),
+    createAt: column.text(),
+    updatedAt: column.text(),
+    createdBy: column.text(),
+    updatedBy: column.text(),
+  },
+});
 export default defineDb({
-  tables: { User },
+  tables: { User, Product, ProductConfig, ProductStock },
 });
