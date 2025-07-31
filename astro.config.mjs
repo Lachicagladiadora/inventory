@@ -14,8 +14,13 @@ export default defineConfig({
   output: 'server',
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    resolve: {
+      alias: import.meta.env.PROD && {
+        "react-dom/server": "react-dom/server.edge",
+      },
+    },
   },
 
-  adapter: cloudflare()
+  adapter: cloudflare({ platformProxy: { enabled: true } }),
 });
