@@ -21,6 +21,9 @@ export default defineConfig({
         'buffer': 'node:buffer'
       },
     },
+    ssr: {
+      external: ['node:buffer']
+    },
   },
 
   adapter: cloudflare(),
