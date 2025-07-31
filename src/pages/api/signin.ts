@@ -1,10 +1,11 @@
 import { type APIRoute } from "astro";
 import { db, eq, User } from "astro:db";
-import jwt from "jsonwebtoken";
 
 import { IS_EMAIL } from "../../utils/regex.utils";
 import { SECRET } from "../../constants";
 import { getOneHourAfterNow } from "../../utils/date.utils";
+import { encoder } from "astro/runtime/server/render/common.js";
+import { SignJWT } from "jose";
 
 export const prerender = false;
 
@@ -21,12 +22,17 @@ export const POST: APIRoute = async ({ cookies, request }) => {
       .limit(1);
     const user = users[0];
     if (!user) throw Error("User not found");
-    const accessToken = jwt.sign({ userId: user.id }, SECRET, {
-      expiresIn: "1h",
-    });
-    const refreshToken = jwt.sign({ userId: user.id }, SECRET, {
-      expiresIn: "7d",
-    });
+    const accessToken = await new SignJWT({ userId: user.id })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("1h") // puede ser '1h', '2d', '30m', etc.
+      .sign(encoder.encode(SECRET));
+
+    const refreshToken = await new SignJWT({ userId: user.id })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("7d") // puede ser '1h', '2d', '30m', etc.
+      .sign(encoder.encode(SECRET));
 
     cookies.set("accessCookies", accessToken, {
       expires: getOneHourAfterNow(),

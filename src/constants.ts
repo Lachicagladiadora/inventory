@@ -5,7 +5,7 @@ export const EMPTY_USER: FormUser = {
   password: "",
 };
 
-export const SECRET = "12345678";
+export const SECRET: string = "12345678";
 
 export const CATEGORIES = [
   {

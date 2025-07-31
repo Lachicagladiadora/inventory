@@ -18,11 +18,10 @@
     "@astrojs/db": "^0.15.0",
     "@astrojs/react": "^4.3.0",
     "@tailwindcss/vite": "^4.1.11",
-    "@types/jsonwebtoken": "^9.0.10",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "astro": "^5.10.1",
-    "jsonwebtoken": "^9.0.2",
+    "jose": "^6.0.12",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.11"
